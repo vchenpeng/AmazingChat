@@ -1,14 +1,23 @@
 define(['ionic.bundle', 'angular-async-loader', 'utils', 'jquery', 'signalr.hubs'], function (ionicBundle, asyncLoader, utils, $) {
     'use strict';
+
+    $.connection.hub.url = "http://192.168.1.16:8089/signalr";
+    $.connection.hub.logging = true;
+    var chat = $.connection.ChatHub;
+    chat.client.Notice = function (msg) { };
+
+    
+    
+
     var app = angular.module('app', ['ui.router', 'ionic', 'ngLocale'])
-        .value('_chat', null)
+        .value('ChatHub', chat)
         .constant("$ionicLoadingConfig", {
             template: "default loading template ..."
         })
         .config(['$ionicConfigProvider', function ($ionicConfigProvider) {
             //$ionicConfigProvider.tabs.position('bottom');
         }])
-        .run(['$ionicPlatform', '$rootScope', '$location', "$window", '$timeout', '$anchorScroll', '$ionicLoading', '$ionicPopup', '_chat', function ($ionicPlatform, $rootScope, $location, $window, $timeout, $anchorScroll, $ionicLoading, $ionicPopup, _chat) {
+        .run(['$ionicPlatform', '$rootScope', '$location', "$window", '$timeout', '$anchorScroll', '$ionicLoading', '$ionicPopup', function ($ionicPlatform, $rootScope, $location, $window, $timeout, $anchorScroll, $ionicLoading, $ionicPopup) {
             console.debug('Device Infos (From Ionic):', ionic.Platform);
 
             $rootScope.config = {
@@ -24,30 +33,17 @@ define(['ionic.bundle', 'angular-async-loader', 'utils', 'jquery', 'signalr.hubs
 
             }, false);
 
-
-            //$.connection.hub.url = "http://192.168.0.107:8089/signalr";
-            //$.connection.hub.logging = true;
-            //var chat = $.connection.ChatHub;
-            //$.connection.hub.start({ transport: ['webSockets', 'longPolling'] }).done(function () {
-            //    console.log('id', $.connection.hub.id);
-            //    chat.client.Talk = function (msg) {
+            //var connection = $.hubConnection();
+            //debugger;
+            //connection.start({ transport: ['webSockets', 'longPolling'] }).done(function () {
+            //    console.log('id', connection.id);
+            //    connection.Talk = function (msg) {
             //        var tmp = '<div class="weui_media_box weui_media_text"><h4 class="weui_media_title">{{NAME}}</h4><p class="weui_media_desc">{{CONTENT}}</p></div>';
             //        tmp = tmp.replace('{{NAME}}', msg.UserName).replace('{{CONTENT}}', msg.Content);
             //        $('#messages').append(tmp);
             //    };
-            //    $rootScope._chat = chat;
+            //    $rootScope._chat = connection;
             //});
-            var connection = $.hubConnection();
-            debugger;
-            connection.start({ transport: ['webSockets', 'longPolling'] }).done(function () {
-                console.log('id', connection.id);
-                connection.Talk = function (msg) {
-                    var tmp = '<div class="weui_media_box weui_media_text"><h4 class="weui_media_title">{{NAME}}</h4><p class="weui_media_desc">{{CONTENT}}</p></div>';
-                    tmp = tmp.replace('{{NAME}}', msg.UserName).replace('{{CONTENT}}', msg.Content);
-                    $('#messages').append(tmp);
-                };
-                $rootScope._chat = connection;
-            });
 
             if (ionic.Platform.isIOS()) {
                 // IOS TODO ...

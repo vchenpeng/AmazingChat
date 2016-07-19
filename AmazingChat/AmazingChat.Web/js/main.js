@@ -42,7 +42,7 @@ require.config({
         'apiService': 'js/services/apiService',
 
         'signalr.core': 'libs/signalR/jquery.signalR-2.2.0.min',
-        'signalr.hubs': 'http://192.168.0.107:8089/signalr/hubs?'
+        'signalr.hubs': 'http://192.168.1.16:8089/signalr/hubs?'
     },
     shim: {
         'angular': { exports: 'angular' },
