@@ -4,10 +4,6 @@ define(['ionic.bundle', 'angular-async-loader', 'utils', 'jquery', 'signalr.hubs
     $.connection.hub.url = "http://192.168.1.16:8089/signalr";
     $.connection.hub.logging = true;
     var chat = $.connection.ChatHub;
-    chat.client.Notice = function (msg) { };
-
-    
-    
 
     var app = angular.module('app', ['ui.router', 'ionic', 'ngLocale'])
         .value('ChatHub', chat)
@@ -17,7 +13,7 @@ define(['ionic.bundle', 'angular-async-loader', 'utils', 'jquery', 'signalr.hubs
         .config(['$ionicConfigProvider', function ($ionicConfigProvider) {
             //$ionicConfigProvider.tabs.position('bottom');
         }])
-        .run(['$ionicPlatform', '$rootScope', '$location', "$window", '$timeout', '$anchorScroll', '$ionicLoading', '$ionicPopup', function ($ionicPlatform, $rootScope, $location, $window, $timeout, $anchorScroll, $ionicLoading, $ionicPopup) {
+        .run(['$ionicPlatform', '$rootScope', '$location', "$window", '$timeout', '$anchorScroll', '$ionicLoading', '$ionicPopup', '$ionicScrollDelegate', 'ChatHub', function ($ionicPlatform, $rootScope, $location, $window, $timeout, $anchorScroll, $ionicLoading, $ionicPopup, $ionicScrollDelegate, ChatHub) {
             console.debug('Device Infos (From Ionic):', ionic.Platform);
 
             $rootScope.config = {
@@ -33,16 +29,32 @@ define(['ionic.bundle', 'angular-async-loader', 'utils', 'jquery', 'signalr.hubs
 
             }, false);
 
-            //var connection = $.hubConnection();
-            //debugger;
-            //connection.start({ transport: ['webSockets', 'longPolling'] }).done(function () {
-            //    console.log('id', connection.id);
-            //    connection.Talk = function (msg) {
-            //        var tmp = '<div class="weui_media_box weui_media_text"><h4 class="weui_media_title">{{NAME}}</h4><p class="weui_media_desc">{{CONTENT}}</p></div>';
-            //        tmp = tmp.replace('{{NAME}}', msg.UserName).replace('{{CONTENT}}', msg.Content);
-            //        $('#messages').append(tmp);
-            //    };
-            //    $rootScope._chat = connection;
+            ChatHub.client.Notice = function (msg) {
+                alert(msg);
+            };
+
+            ChatHub.client.Talk = function (msg) {
+                var tmp = '<div class="weui_media_box weui_media_text"><h4 class="weui_media_title">{{NAME}}</h4><p class="weui_media_desc">{{CONTENT}}</p></div>';
+                tmp = tmp.replace('{{NAME}}', msg.UserName).replace('{{CONTENT}}', msg.Content);
+                $('#messages').append(tmp);
+                $ionicScrollDelegate.scrollBottom(true);
+            };
+
+            ChatHub.client.Pull = function (clients) {
+                var tmp = '<div class="weui_cells weui_cells_access"><a class="weui_cell" href="/#/chat/4"><div class="weui_cell_hd"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAAVFBMVEXx8fHMzMzr6+vn5+fv7+/t7e3d3d2+vr7W1tbHx8eysrKdnZ3p6enk5OTR0dG7u7u3t7ejo6PY2Njh4eHf39/T09PExMSvr6+goKCqqqqnp6e4uLgcLY/OAAAAnklEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=" alt="" style="width:30px;margin-right:5px;display:block"></div><div class="weui_cell_bd weui_cell_primary"><p>{{NAME}}</p></div><span class="weui_cell_ft"></span></a></div>';
+                var allClient = '';
+                clients.forEach(function (client) {
+                    tmp = tmp.replace('{{NAME}}', client.Name);
+                    allClient += tmp;
+                });
+                $('#sessions').html(allClient);
+                $ionicScrollDelegate.scrollBottom(true);
+            };
+
+            //$.connection.hub.start({ xdomain: true }).done(function () {
+            //    console.log('连接成功');
+            //}).fail(function (e) {
+            //    console.error('连接成功失败', e);
             //});
 
             if (ionic.Platform.isIOS()) {
@@ -62,11 +74,11 @@ define(['ionic.bundle', 'angular-async-loader', 'utils', 'jquery', 'signalr.hubs
                     StatusBar.styleDefault();
                 }
             });
-            //utils.clearLocalStorage('__User');
-            $rootScope.data.user = JSON.parse(utils.getLocalStorage('__User')) || { id: 0, name: '', clientId: 0 };
-            if ($rootScope.data.user.name == '') {
+            utils.clearLocalStorage('__User');
+            $rootScope.data.user = JSON.parse(utils.getLocalStorage('__User')) || { UserId: 0, Name: '', ClientId: "" };
+            if ($rootScope.data.user.Name == '') {
                 utils.prompt($ionicPopup, {
-                    template: '<input type="text" ng-model="data.user.name">',
+                    template: '<input type="text" ng-model="data.user.Name">',
                     title: '输入昵称',
                     subTitle: '给自己取一个有个性的名字呗',
                     scope: $rootScope,
@@ -76,14 +88,20 @@ define(['ionic.bundle', 'angular-async-loader', 'utils', 'jquery', 'signalr.hubs
                           text: '<b>保存</b>',
                           type: 'button-positive',
                           onTap: function (e) {
-                              if ($rootScope.data.user.name) {
-                                  var user = { id: 0, name: $rootScope.data.user.name, clientId: 0 };
+                              if ($rootScope.data.user.Name) {
+                                  var user = { UserId: 0, Name: $rootScope.data.user.Name, ClientId: "" };
                                   utils.setLocalStorage('__User', JSON.stringify(user));
                                   $rootScope.config.completeText = '完成';
                                   $rootScope.config.showComplete = true;
                                   $timeout(function () {
                                       $rootScope.config.showComplete = false;
                                   }, 2000);
+                                  $.connection.hub.start({ xdomain: true }).done(function () {
+                                      console.log('连接成功');
+                                      ChatHub.server.conn($rootScope.data.user.Name);
+                                  }).fail(function (e) {
+                                      console.error('连接成功失败', e);
+                                  });
                               } else {
                                   e.preventDefault();
                               }
@@ -95,7 +113,7 @@ define(['ionic.bundle', 'angular-async-loader', 'utils', 'jquery', 'signalr.hubs
                 //发起请求
             }
 
-            $rootScope.title = "\u524d\u7aef\u6846\u67b6";
+            $rootScope.title = "IM";
             $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
                 $rootScope.config.showLoading = true;
                 //utils.showLoading($ionicLoading);
