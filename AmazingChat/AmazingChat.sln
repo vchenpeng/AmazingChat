@@ -5,14 +5,14 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazingChat.Web", "AmazingChat.Web\AmazingChat.Web.csproj", "{F0CC94E2-E759-4E1A-A19B-F8035E1961A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazingChat.Server", "AmazingChat.Server\AmazingChat.Server.csproj", "{9B783152-7352-4041-A6BC-03425BC1B008}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{13936907-F25C-4ACA-BEAF-5FAFB3065FD6}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazingChat.Server", "..\AmazingChat.Server\AmazingChat.Server.csproj", "{9B783152-7352-4041-A6BC-03425BC1B008}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
