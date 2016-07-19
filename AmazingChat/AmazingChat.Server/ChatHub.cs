@@ -12,21 +12,32 @@ namespace AmazingChat.Server
     public class ChatHub : Hub
     {
         static List<Message> _allMsg = new List<Message>();
+        static List<Client> _allClient = new List<Client>();
 
+        public void Init()
+        {
+
+        }
         public void SendMessage(Message msg)
         {
             msg.CreateTime = DateTime.Now;
             _allMsg.Add(msg);
             Clients.All.Talk(msg);
-            Clients.All.Notice(msg);
-            Notice("这是一个通知");
+            Clients.Others.Notice(msg.UserName + " 发来消息");
         }
 
-        public void Notice(string info)
+        public void Conn(Client client)
         {
-            IHubContext context = GlobalHost.ConnectionManager.GetHubContext<ChatHub>();
-            context.Clients.All.Notice(info);
+            client.ClientId = this.Context.ConnectionId;
+            _allClient.Add(client);
+            Clients.Others.Notice(client.Name + " 上线");
         }
+
+        //public void Notice(string info)
+        //{
+        //    IHubContext context = GlobalHost.ConnectionManager.GetHubContext<ChatHub>();
+        //    context.Clients.All.Notice(info);
+        //}
 
         public override System.Threading.Tasks.Task OnConnected()
         {
