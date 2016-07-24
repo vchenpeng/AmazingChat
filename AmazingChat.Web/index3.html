@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="http://192.168.0.107:8089/Scripts/jquery-2.1.3.min.js"></script>
+    <script src="http://192.168.0.107:8089/Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <!--<script src="http://192.168.0.107:8089/signalr/hubs"></script>-->
+    <script type="text/javascript" charset="utf-8" src="/libs/require.js"></script>
+    <script type="text/javascript">
+        require.config({
+            // 应用程序基础路径
+            baseUrl: './',
+            paths: {
+                'jquery': 'libs/jquery/jquery-2.1.3.min',
+                'signalr.core': 'libs/signalR/jquery.signalR-2.2.0.min',
+                'signalr.hubs': 'http://192.168.0.107:8089/signalr/hubs?'
+            },
+            shim: {
+                'jquery': { exports: "$" },
+                "signalr.core": {
+                    deps: ["jquery"],
+                    exports: "$.connection"
+                },
+                "signalr.hubs": {
+                    deps: ["signalr.core"],
+                }
+            },
+            urlArgs: ''
+        });
+
+        //$(function () {
+        //    $.getScript("http://192.168.0.107:8089/signalr/hubs", function () {
+        //        $.connection.hub.url = "http://192.168.0.107:8089/signalr";
+        //        var hub = $.connection.ChatHub;
+        //        $.connection.hub.start();
+        //        hub.client.Talk = function (msgs) {
+        //            //var tmp = '<div class="weui_media_box weui_media_text"><h4 class="weui_media_title">{{NAME}}</h4><p class="weui_media_desc">{{CONTENT}}</p></div>';
+        //            //tmp = tmp.replace('{{NAME}}', msg.UserName).replace('{{CONTENT}}', msg.Content);
+        //            //$('#messages').append(tmp);
+
+        //            var allMsg = '';
+        //            console.log(msgs);
+        //            msgs.forEach(function (a, b) {
+        //                allMsg += (a.UserName + '说:' + a.Content + '\r\n')
+        //            });
+        //            $('#history').val(allMsg);
+        //        }
+
+        //        $('#btnSend').bind('click', function () {
+        //            var username = $('#username').val();
+        //            $.connection.hub.start().done(function () {
+        //                var content = $('#content').val();
+        //                var msg = { UserName: username, Content: content };
+        //                hub.server.sendMessage(msg);
+        //                $('#content').val('');
+        //            });
+        //        });
+        //    });
+        //});
+
+        //require([], function () {
+            $.getScript("http://192.168.0.107:8089/signalr/hubs", function () {
+                $.connection.hub.url = "http://192.168.0.107:8089/signalr";
+                var hub = $.connection.ChatHub;
+                $.connection.hub.start();
+                hub.client.Talk = function (msgs) {
+                    //var tmp = '<div class="weui_media_box weui_media_text"><h4 class="weui_media_title">{{NAME}}</h4><p class="weui_media_desc">{{CONTENT}}</p></div>';
+                    //tmp = tmp.replace('{{NAME}}', msg.UserName).replace('{{CONTENT}}', msg.Content);
+                    //$('#messages').append(tmp);
+
+                    var allMsg = '';
+                    console.log(msgs);
+                    msgs.forEach(function (a, b) {
+                        allMsg += (a.UserName + '说:' + a.Content + '\r\n')
+                    });
+                    $('#history').val(allMsg);
+                }
+
+                $('#btnSend').bind('click', function () {
+                    var username = $('#username').val();
+                    $.connection.hub.start().done(function () {
+                        var content = $('#content').val();
+                        var msg = { UserName: username, Content: content };
+                        hub.server.sendMessage(msg);
+                        $('#content').val('');
+                    });
+                });
+            });
+        //});
+    </script>
+</head>
+<body>
+    <div>
+
+        用户：<input type="text" id="username" /><br /><br />
+        内容：<input type="text" id="content" /><input type="button" id="btnSend" value="发送" />
+    </div>
+    <textarea rows="30" cols="80" id="history"></textarea>
+</body>
+</html>

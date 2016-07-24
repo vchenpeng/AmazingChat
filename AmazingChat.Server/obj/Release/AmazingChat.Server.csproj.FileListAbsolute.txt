@@ -1,0 +1,11 @@
+G:\AmazingChat\AmazingChat.Server\bin\AmazingChat.Server.dll.config
+G:\AmazingChat\AmazingChat.Server\bin\AmazingChat.Server.dll
+G:\AmazingChat\AmazingChat.Server\bin\AmazingChat.Server.pdb
+G:\AmazingChat\AmazingChat.Server\bin\Microsoft.Web.Infrastructure.dll
+G:\AmazingChat\AmazingChat.Server\bin\Microsoft.Web.Infrastructure.xml
+G:\AmazingChat\AmazingChat.Server\obj\Release\AmazingChat.Server.csprojResolveAssemblyReference.cache
+G:\AmazingChat\AmazingChat.Server\obj\Release\AmazingChat.Server.dll
+G:\AmazingChat\AmazingChat.Server\obj\Release\AmazingChat.Server.pdb
+G:\AmazingChat\AmazingChat.Server\bin\EntityFramework.dll
+G:\AmazingChat\AmazingChat.Server\bin\EntityFramework.xml
+G:\AmazingChat\AmazingChat.Server\bin\zh-Hans\EntityFramework.resources.dll

@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <script src="Scripts/jquery-2.1.3.min.js"></script>
+    <script src="Scripts/jquery.signalR-2.2.1.min.js"></script>
+    <script src="signalr/hubs"></script>
+    <script type="text/javascript">
+        $(function () {
+            var hub = $.connection.ChatHub;
+
+            init(hub);
+            function init(hub) {
+                $.connection.hub.start()
+                hub.client.Talk = function (msgs) {
+                    var allMsg = '';
+                    console.log(msgs);
+                    msgs.forEach(function (a, b) {
+                        allMsg += (a.UserName + '说:' + a.Content + '\r\n')
+                    });
+                    $('#history').val(allMsg);
+                }
+
+                hub.client.Notice = function (info) {
+                    //alert(info);
+                }
+            }
+
+            $('#btnSend').bind('click', function () {
+                var username = $('#username').val();
+                $.connection.hub.start().done(function () {
+                    var content = $('#content').val();
+                    var msg = { UserName: username, Content: content };
+                    hub.server.sendMessage(msg);
+                    $('#content').val('');
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div>
+
+        用户：<input type="text" id="username" /><br /><br />
+        内容：<input type="text" id="content" /><input type="button" id="btnSend" value="发送" />
+    </div>
+    <textarea rows="30" cols="80" id="history"></textarea>
+</body>
+</html>

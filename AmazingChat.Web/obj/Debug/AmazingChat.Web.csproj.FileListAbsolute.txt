@@ -1,0 +1,11 @@
+G:\个人文档\我的站点\MyChat\AmazingChat\AmazingChat\AmazingChat.Web\bin\AmazingChat.Web.dll.config
+G:\个人文档\我的站点\MyChat\AmazingChat\AmazingChat\AmazingChat.Web\bin\AmazingChat.Web.dll
+G:\个人文档\我的站点\MyChat\AmazingChat\AmazingChat\AmazingChat.Web\bin\AmazingChat.Web.pdb
+G:\个人文档\我的站点\MyChat\AmazingChat\AmazingChat\AmazingChat.Web\obj\Debug\AmazingChat.Web.dll
+G:\个人文档\我的站点\MyChat\AmazingChat\AmazingChat\AmazingChat.Web\obj\Debug\AmazingChat.Web.pdb
+G:\AmazingChat\AmazingChat.Web\bin\AmazingChat.Web.dll.config
+G:\AmazingChat\AmazingChat.Web\bin\AmazingChat.Web.dll
+G:\AmazingChat\AmazingChat.Web\bin\AmazingChat.Web.pdb
+G:\AmazingChat\AmazingChat.Web\obj\Debug\AmazingChat.Web.dll
+G:\AmazingChat\AmazingChat.Web\obj\Debug\AmazingChat.Web.pdb
+G:\AmazingChat\AmazingChat.Web\obj\Debug\AmazingChat.Web.csprojResolveAssemblyReference.cache

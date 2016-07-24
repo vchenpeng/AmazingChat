@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F61D4E37-3611-406B-A94A-2DCD8F0E1C15}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BackEnd", "BackEnd", "{0B46E12F-DADA-497F-BB3A-4AD4C43FB734}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazingChat.Server", "AmazingChat.Server\AmazingChat.Server.csproj", "{47E84697-5FC2-4A04-B860-D68FC0145164}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FontEnd", "FontEnd", "{0FEC6F6E-EC05-4064-A200-B141D3D07F45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazingChat.Web", "AmazingChat.Web\AmazingChat.Web.csproj", "{F0CC94E2-E759-4E1A-A19B-F8035E1961A8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{47E84697-5FC2-4A04-B860-D68FC0145164}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47E84697-5FC2-4A04-B860-D68FC0145164}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47E84697-5FC2-4A04-B860-D68FC0145164}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47E84697-5FC2-4A04-B860-D68FC0145164}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0CC94E2-E759-4E1A-A19B-F8035E1961A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0CC94E2-E759-4E1A-A19B-F8035E1961A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0CC94E2-E759-4E1A-A19B-F8035E1961A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0CC94E2-E759-4E1A-A19B-F8035E1961A8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{47E84697-5FC2-4A04-B860-D68FC0145164} = {0B46E12F-DADA-497F-BB3A-4AD4C43FB734}
+		{F0CC94E2-E759-4E1A-A19B-F8035E1961A8} = {0FEC6F6E-EC05-4064-A200-B141D3D07F45}
+	EndGlobalSection
+EndGlobal
