@@ -5,7 +5,7 @@
         $scope.model = {
             id: 1,
             dateTime: Date.now(),
-            name: '我点餐',
+            name: 'IM',
             desc: '描述信息测试'
         };
     }]);
