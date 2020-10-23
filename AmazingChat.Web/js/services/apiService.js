@@ -3,7 +3,6 @@
     sModule.factory('apiService', ["$http", "$rootScope", "$state", function ($http, $rootScope, $state) {
         var _service = function (ctrlName) {
             var service = {
-                
                 /**
                  * 封装调用api  call
                  * @param baseUrl  基础服务器地址
